@@ -1,10 +1,18 @@
 const express = require("express")
 const noteModel = require("./models/note.model")
 const app = express()
-
+const cors = require("cors")
+const path = require("path")
 // post method and save data in mongodb
 
 app.use(express.json())
+app.use(cors())
+app.use(express.static("./public"))
+
+
+app.use('*name',(req,res)=> {
+    res.sendFile(path.join(__dirname, "..", "/public/index.html"))
+})
 
 app.post('/notes',async (req,res) => {
     const {title, description} = req.body
