@@ -7,12 +7,9 @@ const path = require("path")
 
 app.use(express.json())
 app.use(cors())
-app.use(express.static("./public"))
+app.use(express.static("./src"))
 
 
-app.use('*name',(req,res)=> {
-    res.sendFile(path.join(__dirname, "..", "/public/index.html"))
-})
 
 app.post('/notes',async (req,res) => {
     const {title, description} = req.body
@@ -53,6 +50,11 @@ app.patch("/notes/:id",async (req,res) => {
    res.status(200).json({
     message:"note updated successfully"
    })
+
+   app.use('*name',(req,res)=> {
+    res.sendFile(path.join(__dirname, "..", "/public/index.html"))
+})
+
 })
 
 module.exports = app

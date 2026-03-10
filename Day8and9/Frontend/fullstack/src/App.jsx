@@ -33,7 +33,7 @@ function App() {
       description:description.value
     })
     .then((res) => {
-      console.log(res);
+      // console.log(res);
       fetchNotes()
     })
   }
