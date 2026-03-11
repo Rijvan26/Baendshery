@@ -51,10 +51,12 @@ app.patch("/notes/:id",async (req,res) => {
     message:"note updated successfully"
    })
 
-   app.use('*',(req,res)=> {
-    res.sendFile(path.join(__dirname, "..", "/public/index.html"))
+  
+
 })
 
+ app.use('*name',(req,res)=> {
+    res.sendFile(path.join(__dirname, "..", "/public/index.html"))
 })
 
 module.exports = app

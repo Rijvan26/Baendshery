@@ -10,8 +10,9 @@ function App() {
     
   ])
 
+  const API = "https://baendshery-1.onrender.com"
   function fetchNotes () {
-    axios.get("http://localhost:3000/notes")
+    axios.get(`${API}/notes`)
       .then((res) => {
         setNotes(res.data.notes || [])
         console.log(res.data.notes)
@@ -28,7 +29,7 @@ function App() {
     console.log(title.value, description.value);
     
 
-    axios.post("http://localhost:3000/notes",{
+    axios.post(`${API}/notes`,{
       title:title.value,
       description:description.value
     })
@@ -40,7 +41,7 @@ function App() {
 
   function handleDelete (note_Id) {
       console.log(note_Id);
-      axios.delete("http://localhost:3000/notes/"+note_Id)
+      axios.delete(`${API}/notes/${note_Id}`)
       .then((res) => {
         console.log(res.data);
         fetchNotes()
