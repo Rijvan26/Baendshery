@@ -7,7 +7,7 @@ const path = require("path")
 
 app.use(express.json())
 app.use(cors())
-app.use(express.static("./src"))
+app.use(express.static("./public"))
 
 
 
@@ -51,7 +51,7 @@ app.patch("/notes/:id",async (req,res) => {
     message:"note updated successfully"
    })
 
-   app.use('*name',(req,res)=> {
+   app.use('*',(req,res)=> {
     res.sendFile(path.join(__dirname, "..", "/public/index.html"))
 })
 
