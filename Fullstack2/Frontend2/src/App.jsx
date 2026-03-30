@@ -2,26 +2,14 @@ import React, {useState, useEffect} from 'react'
 import axios from "axios"
 const App = () => {
     const [notes, setNotes] = useState([
-        {
-            title: "test title 1",
-            description:"test desc 1"
-        },
-         {
-            title: "test title 2",
-            description:"test desc 1"
-        },
-         {
-            title: "test title 3",
-            description:"test desc 1"
-        },
-         {
-            title: "test title 4",
-            description:"test desc 1"
-        },
+        
     ])
 
+const API = "https://baendshery-2.onrender.com/"
+
+
     function fetchApi() {
-       axios.get("http://localhost:3000/get/notes")
+       axios.get(`${API}/notes`)
     .then((res) => {
       // console.log(res.data)
 
@@ -36,7 +24,7 @@ const App = () => {
 
          console.log(title.value,description.value)
 
-         axios.post("http://localhost:3000/notes",{
+         axios.post(`${API}/notes`,{
           title:title.value,
           description:description.value,
 
@@ -49,7 +37,7 @@ const App = () => {
 
     function deleteHandler (id) {
 
-      axios.delete("http://localhost:3000/notes/"+id)
+      axios.delete(`${API}/notes/${id}`)
       .then((res) => {
         console.log(res.data)
         fetchApi()
