@@ -13,7 +13,7 @@ const API = "https://baendshery-2.onrender.com/"
     .then((res) => {
       // console.log(res.data)
 
-      setNotes(res.data.notes)
+      setNotes(res.data.notes || [])
     })
     }
 
