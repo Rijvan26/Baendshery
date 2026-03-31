@@ -5,13 +5,12 @@ const App = () => {
         
     ])
 
-const API = "https://baendshery-2.onrender.com/"
+const API = "http://localhost:3000"
 
 
     function fetchApi() {
-       axios.get(`${API}/notes`)
+       axios.get(`${API}/api/notes`)
     .then((res) => {
-      // console.log(res.data)
 
       setNotes(res.data.notes || [])
     })
@@ -24,7 +23,7 @@ const API = "https://baendshery-2.onrender.com/"
 
          console.log(title.value,description.value)
 
-         axios.post(`${API}/notes`,{
+         axios.post(`${API}/api/notes`,{
           title:title.value,
           description:description.value,
 
@@ -37,7 +36,7 @@ const API = "https://baendshery-2.onrender.com/"
 
     function deleteHandler (id) {
 
-      axios.delete(`${API}/notes/${id}`)
+      axios.delete(`${API}/api/notes/${id}`)
       .then((res) => {
         console.log(res.data)
         fetchApi()

@@ -3,11 +3,13 @@ const noteModel = require("./models/notes.model")
 const app = express()
 const cors = require("cors")
 const path = require("path")
+
+
 app.use(express.json())
 app.use(express.static("./public"))
 app.use(cors())
 
-app.post("/notes",async (req,res) => {
+app.post("/api/notes",async (req,res) => {
 
     const {title, description} = req.body
 
@@ -21,7 +23,7 @@ app.post("/notes",async (req,res) => {
     })
 })
 
-app.get("/get/notes", async (req,res) => {
+app.get("/api/notes", async (req,res) => {
     const notes = await noteModel.find()
 
     res.status(200).json({
@@ -30,8 +32,8 @@ app.get("/get/notes", async (req,res) => {
     })
 })
 
-app.delete("/notes/:noteid", async (req,res) => {
-    const noteId = req.params.noteid
+app.delete("/api/notes/:id", async (req,res) => {
+    const noteId = req.params.id
 
  const denote =  await noteModel.findByIdAndDelete(noteId)
 
@@ -43,7 +45,7 @@ app.delete("/notes/:noteid", async (req,res) => {
 
 })
 
-app.patch("/notes/:id", async (req,res) => {
+app.patch("/api/notes/:id", async (req,res) => {
     const noteId = req.params.id
     const {description} = req.body
   const upnote =   await noteModel.findByIdAndUpdate(noteId,{description})
