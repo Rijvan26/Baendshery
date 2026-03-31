@@ -5,7 +5,7 @@ const App = () => {
         
     ])
 
-const API = "http://localhost:3000"
+const API = "https://baendshery-2.onrender.com"
 
 
     function fetchApi() {
