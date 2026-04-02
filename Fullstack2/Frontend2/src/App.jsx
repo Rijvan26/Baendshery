@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react'
 import axios from "axios"
-// import Button from "../src/components/Button"
 import Navbar from "../src/components/Navbar"
 import {
   Container,
@@ -12,14 +11,12 @@ import {
   Stack,
   Box
 } from "@mui/material"
-// import AutoComplet from "../src/components/AutoComplet"
 const App = () => {
     const [notes, setNotes] = useState([ ])
     const [editId, setEditId] = useState(null)
     const [editData, setEditData] = useState({title:"", description:""})
 
-// const API = "https://baendshery-2.onrender.com"
-const API = "http://localhost:3000"
+const API = "https://baendshery-2.onrender.com"
 
 
     function fetchApi() {
