@@ -1,0 +1,35 @@
+.create-post-page {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .form-container {
+    display: flex;
+    flex-direction: column;
+    gap: .9rem;
+
+    form {
+        display: flex;
+    flex-direction: column;
+    gap: .7rem;
+
+    .caption-input{
+        color: rgb(49, 49, 49);
+        padding-inline: 1.2rem;
+        padding-block: .7rem;
+        border-radius: .3rem;
+    }
+
+   .input-file-label {
+        background-color: #c57c1d;
+        color: rgb(49, 49, 49);
+        padding-inline: 1rem;
+        padding-block: .5rem;
+        border-radius: .3rem;
+    }
+    }
+}
+}
+

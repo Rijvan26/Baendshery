@@ -1,0 +1,39 @@
+main{
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-container{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    form{
+    min-width: 400px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+
+         input, button {
+            padding: 15px 18px;
+            border: none;
+            outline: none;
+            border-radius: 10px;
+        }
+
+        button {
+            background-color: rgb(167, 117, 26);
+            color: whitesmoke;
+        }
+
+       
+    }
+
+     .authtoggle{
+        text-decoration: none;
+        color: rgb(189, 164, 23);
+    }
+}
