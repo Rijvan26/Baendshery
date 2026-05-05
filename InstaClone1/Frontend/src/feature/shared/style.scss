@@ -1,0 +1,17 @@
+@use "./button.scss";
+@import "./variables.scss";
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,body,
+#root {
+    width: 100%;
+}
+
+html {
+    background-color: var(--color-bg-main);
+    color: rgb(214, 212, 212);
+}

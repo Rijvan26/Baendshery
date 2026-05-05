@@ -1,0 +1,118 @@
+@import "../../shared/variables.scss";
+
+@mixin flex-column($gap:0rem) {
+   display: flex;
+  flex-direction: column;
+  gap: $gap;
+}
+
+
+
+.login-main{
+    min-height:100vh;
+    width: 100%;
+    padding: var(--space-sm);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-bg-main)
+}
+
+.form-container{
+    @include flex-column(var(--space-md));
+    
+  gap: var(--space-sm);
+    height: fit-content;
+    max-width: 23.7rem;
+    width: 100%;
+    border: 1px solid var(--color-border);
+    border-radius: var(--space-md);
+    padding: var(--space-md);
+    box-shadow: var(--shadow-glow-md);
+    form{
+        @include flex-column(var(--space-sm));
+  gap: var(--space-md) ;
+
+    }
+
+    .error {
+      color: var(--color-tertiary);
+      font-size: var(--text-md);
+      text-align: center;
+      text-transform: capitalize;
+    }
+
+    input,button{
+        padding: var(--space-sm) var(--space-md);
+        border: none;
+        border-radius: var(--radius-sm);
+        outline: none;
+    }
+
+    input {
+    background: var(--color-bg-soft);
+    color: var(--color-text-primary);
+    border: 1px solid var(--color-border);
+
+    &::placeholder {
+      color: var(--color-text-secondary);
+    }
+
+    &:focus {
+      border: 1px solid var(--color-primary);
+      box-shadow: 0 0 0.5rem var(--color-primary);
+    }
+  }
+
+  .profile-pic-label {
+    background: var(--color-primary-dark);
+    color: var(--color-text-primary);
+    font-size: var(--text-sm);
+    padding: var(--space-sm) var(--space-md);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+        transition: 0.3s ease;
+  }
+
+     button {
+    background: linear-gradient(
+      to right,
+      var(--color-primary),
+      var(--color-tertiary)
+    );
+    color: var(--color-text-primary);
+    cursor: pointer;
+    transition: 0.3s ease;
+
+    &:hover {
+      transform: translateY(-0.1rem);
+      box-shadow: 0 0 0.8rem var(--color-primary);
+    }
+  }
+
+  /* ✅ AUTH TOGGLE LINK */
+  .authtoggle {
+    text-decoration: none;
+    color: var(--color-primary);
+    font-size: var(--text-sm);
+    text-align: center;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+/* 🔻 MOBILE */
+@media (max-width: 30rem) {
+  .form-container {
+    padding: var(--space-md);
+
+    input,
+    button {
+      padding: var(--space-sm);
+    }
+  }
+}
+
+

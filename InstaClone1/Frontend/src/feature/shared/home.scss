@@ -1,0 +1,108 @@
+@import "./variables.scss";
+
+.home {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--color-bg-main);
+  font-family: "Inter", sans-serif;
+  color: var(--color-text-primary);
+  padding: var(--space-lg);
+
+  &__card {
+    background: var(--color-bg-card);
+    padding: var(--space-2xl);
+    border-radius: var(--radius-lg);
+    text-align: center;
+    width: 100%;
+    max-width: 22.5rem; /* 360px */
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-glow-md);
+  }
+
+  &__title {
+    margin-bottom: var(--space-sm);
+    font-size: var(--text-xl);
+    line-height: 1.2;
+    background: linear-gradient(
+      to right,
+      var(--color-primary),
+      var(--color-secondary)
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  &__subtitle {
+    margin-bottom: var(--space-xl);
+    color: var(--color-text-secondary);
+    font-size: var(--text-sm);
+  }
+
+  &__buttons {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+}
+
+/* Buttons */
+.btn {
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  cursor: pointer;
+  border: none;
+  transition: 0.3s ease;
+  width: 100%;
+
+  &--login {
+    background: linear-gradient(
+      to right,
+      var(--color-primary),
+      var(--color-tertiary)
+    );
+    color: white;
+
+    &:hover {
+      box-shadow: 0 0 .4rem var(--color-primary);
+      transform: translateY(-0.125rem);
+    }
+  }
+
+  &--register {
+    background: transparent;
+    border: 1px solid var(--color-primary);
+    color: var(--color-text-primary);
+
+    &:hover {
+      background: var(--color-primary-dark);
+      color: white;
+      transform: translateY(-0.125rem);
+    }
+  }
+}
+
+/* 🔻 MOBILE */
+@media (max-width: 30rem) {
+  .home {
+    padding: var(--space-md);
+
+    &__card {
+      padding: var(--space-lg);
+    }
+
+    &__title {
+      font-size: var(--text-lg);
+    }
+
+    &__subtitle {
+      margin-bottom: var(--space-lg);
+    }
+  }
+
+  .btn {
+    padding: var(--space-sm);
+  }
+}
