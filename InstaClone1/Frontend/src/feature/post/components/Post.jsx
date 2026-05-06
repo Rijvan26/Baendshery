@@ -5,7 +5,7 @@ import useAuth from "../../auth/hooks/userAuth"
 const Post = ({user, post, handleLikePost, handleUnLikePost, handleFollowUser, handleUnFollowUser}) => {
   const {user: currentUser} = useAuth()
   const postOwnerUsername =
-  typeof post.user === "object"
+  typeof post?.user === "object"
     ? post.user.username
     : null;
 
@@ -15,10 +15,10 @@ const Post = ({user, post, handleLikePost, handleUnLikePost, handleFollowUser, h
                         <div className="user">
                             <div className="feed-profile-logo">
                                 <div className="img-wrapper">
-                        <img src={user.profilePic} alt="" />
+                        <img src={user?.profilePic} alt="" />
                            
                             </div>
-                            <p>     {user.username}     </p>
+                            <p>     {user?.username}     </p>
 
                             </div>
                             <div className="follow-btn">

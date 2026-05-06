@@ -23,7 +23,7 @@ const SuggestedUsers = ({ users }) => {
 
             <p>{user.username}</p>
             <button
-              className="follow-btn"
+              className={user.isFollowing? "following" : "follow"}
               onClick={async () => {
                 if (user.isFollowing) {
                   await handleUnFollowUser(user.username);

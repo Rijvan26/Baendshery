@@ -24,6 +24,7 @@ export const usePost = () => {
     const handleLikePost = async (postId) => {
         setActionLoading(true)
         const data = await likePost(postId)
+        
         await handleGetFeed()
        
         setActionLoading(false)
@@ -36,6 +37,7 @@ export const usePost = () => {
         setActionLoading(true)
         const data = await unLikePost(postId)
        
+        
         await handleGetFeed()
         setActionLoading(false)
 

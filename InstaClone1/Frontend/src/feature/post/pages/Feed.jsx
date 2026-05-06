@@ -47,7 +47,7 @@ const Feed = () => {
                 <div className="posts">
                     {
                       feed?.length > 0 &&  feed.map(post => {
-                            return  <Post key={post._id} user={post.user} post={post} 
+                            return  <Post key={post?._id} user={post?.user} post={post} 
                                         loading={loading} handleLikePost={handleLikePost} handleUnLikePost={handleUnLikePost}
                                             handleFollowUser={handleFollowUser} handleUnFollowUser={handleUnFollowUser}
                                        />

@@ -73,7 +73,29 @@
             border: none;
             cursor: pointer;
         }
+
     }
+
+    .follow {
+            padding: var(--space-xs) var(--space-sm);
+            font-size: var(--text-sm);
+
+            border-radius: var(--radius-sm);
+            background-color: var(--color-primary-dark);
+                color: var(--color-text-primary);
+                 cursor: pointer;
+            
+
+             .following {
+                 padding: var(--space-xs) var(--space-sm);
+            font-size: var(--text-sm);
+            border-radius: var(--radius-sm);
+            background-color: rgb(241, 241, 241);
+                color:var(--color-text-secondary);
+                cursor: pointer;
+            }
+        
+        }
 }
 }
 }
