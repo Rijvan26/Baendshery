@@ -34,7 +34,7 @@ const Sidebar = ({ user }) => {
 
       {/* MOBILE NAV */}
       <div className="mobile-nav">
-        <Link to="/" className={location.pathname === "/" ? "active" : ""}>
+        <Link to="/feed" className={location.pathname === "/" ? "active" : ""}>
           <i className="ri-home-5-line"></i>
         </Link>
 
@@ -44,7 +44,7 @@ const Sidebar = ({ user }) => {
         <Link to={'/message'}>
         <i class="ri-send-ins-line"></i>
         </Link>
-        <Link to={`/profile/${user?.username}`} className={location.pathname.includes("/profile") ? "active" : ""}>
+        <Link to={`/get-me`} className={location.pathname.includes("/profile") ? "active" : ""}>
           <i className="ri-user-line"></i>
         </Link>
       </div>

@@ -11,7 +11,6 @@ const SuggestedUsers = ({ users }) => {
     return <p>No suggestions</p>;
   }
 
-  console.log(users);
   return (
     <main className="suggested-main">
       <div className="suggested-user-container">

@@ -34,7 +34,6 @@ const Feed = () => {
             
         )
     }
-    console.log(feed)
     return (
            <main>
             <div className="sidebar">
