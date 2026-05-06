@@ -48,7 +48,12 @@ async function registerController (req,res)  {
     },process.env.JWT_SECRET,
     {expiresIn: "1d"})
 
-    res.cookie("token", token)
+    res.cookie("token", token ,{
+        httpOnly: true, // this will prevent client side js to access the cookie, this is important for security
+        sameSite: true, // this will allow cookie to be sent in cross-origin request only if the request is from the same site. This is important for security, especially when your frontend and backend are on different domains.
+        secure:true, // this will ensure cookie is sent only over https, this is important for security, especially in production
+        maxAge: 15 * 60 * 1000
+    })
 
     res.status(201).json({
         message: "user register successfully",
@@ -102,8 +107,10 @@ async function loginController (req,res)  {
     // advance cokkie send and res.cookie allow only 3 arguments
     res.cookie("token", token, {
     httpOnly: true, //only allow http request
+    secure: true, // true in production
+    sameSite: true ,// this will allow cookie to be sent in cross-origin request only if the request is from the same site. This is important for security, especially when your frontend and backend are on different domains.
     maxAge: 15 * 60 * 1000, // 15 minutes in ms
-    secure: false, // true in production
+
 })
 
 
