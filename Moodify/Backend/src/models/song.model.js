@@ -5,6 +5,10 @@ const songSchema = new mongoose.Schema({
         type:String,
         required:true
     },
+    image:{
+        type:String,
+        required:false,
+    },
     posterUrl:{
         type:String,
         required:false,
@@ -12,6 +16,11 @@ const songSchema = new mongoose.Schema({
     title:{
         type:String,
         required:true   
+    },
+    artist:{
+        type:String,
+        required:false,
+        default:"Unknown Artist"
     },
     mood: {
         type:String,

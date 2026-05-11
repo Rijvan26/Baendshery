@@ -57,7 +57,7 @@ const ExpressionTracker = () => {
     const moodMap = {
       "Happy": "happy",
       "Surprised": "surprised",
-      "Sad / Tired": "sad",
+      "Sad": "sad",
       "Neutral": "happy"
     }
 
@@ -183,4 +183,4 @@ const ExpressionTracker = () => {
   )
 }
 
-export default ExpressionTracker
+export default ExpressionTracker

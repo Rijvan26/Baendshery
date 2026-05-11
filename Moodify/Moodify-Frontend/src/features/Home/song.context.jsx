@@ -8,6 +8,7 @@ export const SongContextProvider = ({children}) => {
         url: "https://ik.imagekit.io/nnxrkxddlh/cohort2/moodify/songs/Burdah_-_Bonus__ApniISP.Com__MlcBrd55z.mp3",
         posterUrl: null,
         title: "Burdah - Bonus (ApniISP.Com)",
+        artist: "Unknown Artist",
         mood: "happy"
     })
 

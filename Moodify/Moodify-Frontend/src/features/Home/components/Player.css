@@ -52,6 +52,15 @@
   color: #fff;
 }
 
+.song-artist {
+  margin: 2px 0 0 0;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.6);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .song-mood {
   margin: 2px 0 0 0;
   font-size: 0.75rem;

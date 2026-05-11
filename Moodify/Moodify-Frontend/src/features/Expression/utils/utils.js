@@ -26,17 +26,25 @@ export function detectExpression(landmarks) {
   const eyeOpen =
     Math.abs(topEye.y - bottomEye.y) / faceHeight
 
+  // Detect mouth downward (sad expression)
+  const mouthCenter = (leftMouth.y + rightMouth.y) / 2
+  const lipCenter = (topLip.y + bottomLip.y) / 2
+  const mouthDown = Math.max(0, mouthCenter - lipCenter) / faceHeight
+
+
   return {
     mouthWidth,
     mouthOpen,
-    eyeOpen
+    eyeOpen,
+    mouthDown
   }
 }
 
 export function classifyExpression({
   mouthWidth,
   mouthOpen,
-  eyeOpen
+  eyeOpen,
+  mouthDown
 }) {
 
   if (mouthOpen > 0.075 && eyeOpen > 0.045) {
@@ -46,25 +54,27 @@ export function classifyExpression({
     }
   }
 
-  if (mouthWidth > 0.02 && mouthOpen > 0.05) {
+  if (mouthWidth > 0.02 && mouthOpen > 0.05 && mouthDown < 0.01) {
     return {
       emoji: "😄",
       label: "Happy"
     }
   }
 
-  if (eyeOpen < 0.00005 && mouthOpen < 0.00008) {
+  // Sad face: mouth turning downward with eyes not too wide open
+  if (mouthDown > 0.02 && eyeOpen < 0.08 && mouthWidth < 0.05) {
     return {
-      emoji: "😑",
-      label: "Sad / Tired"
+      emoji: "😢",
+      label: "Sad"
     }
   }
 
   return {
     emoji: "😐",
-    label: "Neutral"
+    label: "Neutral/Tired"
   }
 }
+
 
 export function drawMesh(canvas, video, landmarks) {
 

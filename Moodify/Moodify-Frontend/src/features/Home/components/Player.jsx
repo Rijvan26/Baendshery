@@ -121,6 +121,7 @@ const Player = () => {
   return (
     <div className="player-container">
       <audio
+      autoPlay={false}
         ref={audioRef}
         onTimeUpdate={handleTimeUpdate}
         onLoadedMetadata={handleLoadedMetadata}
@@ -135,6 +136,7 @@ const Player = () => {
         )}
         <div className="song-details">
           <h3 className="song-title">{song?.title || 'No Song Selected'}</h3>
+          <p className="song-artist">{song?.artist || 'Unknown Artist'}</p>
           <p className="song-mood">{song?.mood || ''}</p>
         </div>
       </div>
