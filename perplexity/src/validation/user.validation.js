@@ -5,8 +5,8 @@ export const validateUserSignup = [
     .trim()
     .isLength({ min: 3 })
     .withMessage('Username must be at least 3 characters long')
-    .isAlphanumeric()
-    .withMessage('Username must contain only letters and numbers'),
+  .matches(/^[a-zA-Z0-9_]+$/)
+.withMessage('Username can only contain letters, numbers, and underscores'),
 
   body('email')
     .isEmail()
@@ -31,6 +31,7 @@ export const validateUserLogin = [
     .normalizeEmail(),
 
   body('password')
+  .trim()
     .notEmpty()
     .withMessage('Password is required'),
 ];

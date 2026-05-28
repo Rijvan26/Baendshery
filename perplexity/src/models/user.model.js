@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema(
       minlength: [6, 'Password must be at least 6 characters long'],
       select: false,
     },
-    verified: {
+    isVerified: {
       type: Boolean,
       default: false,
     },
@@ -32,10 +32,9 @@ const userSchema = new mongoose.Schema(
 
 // Hash password before saving
 userSchema.pre('save', async function (next) {
-  if (!this.isModified('password')) return next();
+  if (!this.isModified('password')) return ;
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
-  next();
 });
 
 // Compare password method
@@ -43,4 +42,6 @@ userSchema.methods.comparePassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
-export const userModel = mongoose.model('User', userSchema);
+ const userModel = mongoose.model('User', userSchema);
+
+ export default userModel;
