@@ -1,0 +1,23 @@
+{
+  "name": "genai",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@langchain/core": "^1.1.48",
+    "@langchain/mistralai": "^1.1.0",
+    "dotenv": "^17.4.2",
+    "googleapis": "^173.0.0",
+    "langchain": "^1.4.2",
+    "mongoose": "^9.6.3",
+    "nodemailer": "^8.0.10",
+    "readline-sync": "^1.4.10"
+  }
+}
