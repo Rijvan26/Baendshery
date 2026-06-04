@@ -18,20 +18,19 @@ export async function sendMessages (req,res) {
         
     }
 
-    const messages = (await chatModel.find({chat:chatId})).sort({createdAt: 1})
-    const result = await genrateResponse(message)
-
-
-
-
     const userMessage = await messageModel.create({
-        chat: chat.id,
+        chat: chatId ||chat.id,
         content:message,
         role:"user"
     })
 
+
+    const messages = await messageModel.find({chat:chatId}).sort({createdAt: 1})
+    const result = await genrateResponse(message)
+
+    
     const aiMessage = await messageModel.create({
-        chat : chat.id,
+        chat :chatId ||  chat.id,
         content:result,
         role:"ai"
     })
@@ -40,6 +39,42 @@ export async function sendMessages (req,res) {
         title,
         chat,
         aiMessage
+    })
+}
+
+export async function getChats(req,res) {
+    const user = req.user
+
+    const chats = await chatModel.find({user:user.id})
+
+    res.status(200).json({
+        message:"chat fetched successfully",
+        chats
+    })
+}
+
+export async function getMessages(req,res) {
+    const {chatId} = req.params
+
+    const chat = await chatModel.fincOne({
+        _id:chat.id,
+        user:req.user.id
+
+    })
+
+    if(!chat){
+        return res.status(400).json({
+            message:"chat not found"
+        })
+    }
+
+    const messages = await messageModel.find({
+        chat:chatId
+    })
+
+    res.status(200).json({
+        message:"messagge fetched successfully",
+        messages
     })
 }
 
