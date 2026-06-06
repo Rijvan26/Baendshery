@@ -1,5 +1,5 @@
 import {intialSocketConnection} from "../socket/chat.socket"
-import {setChats, setIsLoading,setError,setCurrentChatId,createNewChats,addNewMessage } from "../chat.slice"
+import {setChats, setIsLoading,setError,setCurrentChatId,createNewChats,addNewMessage,addMessages } from "../chat.slice"
 import { sendMessage,getChats,getMessages,deleteChat } from "../socket/chat.service"
 import { useDispatch, useSelector } from "react-redux"
 
@@ -28,7 +28,7 @@ async function handelSendMessage ({message,chatId}) {
         // Add user message to existing or new chat
         dispatch(addNewMessage({
             chatId: chatId,
-            conetent: message,
+            content: message,
             role:"user"
         }))
 
@@ -36,7 +36,7 @@ async function handelSendMessage ({message,chatId}) {
         if (aiMessage) {
             dispatch(addNewMessage ({
                 chatId: chatId,
-                conetent: aiMessage.message || aiMessage.content,
+                content: aiMessage.message || aiMessage.content,
                 role: aiMessage.role || "assistant"
             }))
         }
@@ -55,6 +55,7 @@ async function handleLoadChats() {
     try {
         dispatch(setIsLoading(true))
         const data = await getChats()
+        console.log("Chats loaded from backend:", data)
         dispatch(setChats(data))
         dispatch(setIsLoading(false))
     } catch (error) {
@@ -68,7 +69,31 @@ async function handleLoadMessages(chatId) {
     try {
         dispatch(setIsLoading(true))
         const data = await getMessages(chatId)
-        dispatch(setCurrentChatId(chatId))
+        console.log("Messages loaded from backend:", data)
+        
+        // Ensure messages is an array and has correct structure
+        let messagesArray = []
+        if (Array.isArray(data)) {
+            messagesArray = data
+        } else if (data.messages && Array.isArray(data.messages)) {
+            messagesArray = data.messages
+        } else if (data.chat && Array.isArray(data.chat.messages)) {
+            messagesArray = data.chat.messages
+        }
+        
+        // Ensure each message has content and role fields
+        messagesArray = messagesArray.map(msg => ({
+            content: msg.content || msg.message || msg.text || '',
+            role: msg.role || msg.sender || 'user'
+        }))
+        
+        console.log("Formatted messages:", messagesArray)
+        
+        // Update the specific chat with its messages
+        dispatch(addMessages({
+            chatId: chatId,
+            messages: messagesArray
+        }))
         dispatch(setIsLoading(false))
         return data
     } catch (error) {

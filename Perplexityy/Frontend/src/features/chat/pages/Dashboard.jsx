@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from "react-redux"
+import ReactMarkdown from 'react-markdown'
 import { useChat } from "../hooks/useChat"
 import { setCurrentChatId } from "../chat.slice"
 
@@ -18,13 +19,47 @@ const Dashboard = () => {
    const currentMessages = currentChatId && chats[currentChatId]?.messages || []
    const chatHistory = Object.values(chats)
 
+  
+
    useEffect(() => {
       chatHook.intialSocketConnection()
       // Load all chats on mount
       chatHook.handleLoadChats()
    }, [])
 
-   console.log("Redux chats:", chats);
+   // Auto-select first chat when chats are loaded
+   // useEffect(() => {
+   //    console.log("Auto-select effect - chatHistory length:", chatHistory.length, "currentChatId:", currentChatId)
+   //    if (chatHistory.length > 0 && !currentChatId) {
+   //       const firstChat = chatHistory[0]
+   //       const firstChatId = firstChat?.id
+   //       console.log("First chat object:", firstChat)
+   //       console.log("First chat ID:", firstChatId)
+         
+   //       if (firstChatId) {
+   //          console.log("Auto-selecting first chat:", firstChatId)
+   //          dispatch(setCurrentChatId(firstChatId))
+   //       } else {
+   //          console.warn("First chat has no ID!")
+   //       }
+   //    }
+   // }, [chatHistory.length, currentChatId, dispatch])
+
+   // Load messages when chat is selected (only when currentChatId changes and is not null)
+   // useEffect(() => {
+   //    if (currentChatId && chatHistory.length > 0) {
+   //       console.log("Loading messages for chat:", currentChatId)
+   //       // Get the chat object to verify it exists
+   //       const selectedChat = chats[currentChatId]
+   //       console.log("Selected chat object:", selectedChat)
+         
+   //       if (selectedChat) {
+   //          chatHook.handleLoadMessages(currentChatId)
+   //       } else {
+   //          console.warn("Chat not found in state for ID:", currentChatId)
+   //       }
+   //    }
+   // }, [currentChatId])
 
 
    const handleSubmitMessage = (event) => {
@@ -46,12 +81,15 @@ const Dashboard = () => {
    }
 
    const handleNewChat = () => {
-      // Just reset - user can type and send to create new chat
+      // Reset to create a new chat
+      dispatch(setCurrentChatId(null))
       setInputValue('')
    }
 
-   const handleSelectChat = (chatId) => {
+   const handleSelectChat = async (chatId) => {
+      console.log("hello")
       dispatch(setCurrentChatId(chatId))
+    await  chatHook.handleLoadMessages(chatId)
    }
 
    const handleDeleteChat = (e, chatId) => {
@@ -65,9 +103,9 @@ const Dashboard = () => {
    return (
       <div className="flex h-screen bg-gray-900 text-gray-100">
          {/* Left Sidebar */}
-         <div className={`${isSidebarOpen ? 'w-64' : 'w-0'} bg-gray-950 border-r border-gray-700 flex flex-col transition-all duration-300 overflow-hidden`}>
+         <div className={`${isSidebarOpen ? 'w-64' : 'w-0'}  bg-gray-950 border-r border-gray-700 flex flex-col transition-all duration-300 overflow-hidden`}>
             {/* Sidebar Header */}
-            <div className="p-4 border-b border-gray-700">
+            <div className="p-4 border-b border-gray-700 ">
                <button
                   onClick={handleNewChat}
                   className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded-lg transition-colors"
@@ -78,38 +116,41 @@ const Dashboard = () => {
             </div>
 
             {/* Chat History */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-2">
+            <div className="flex-1 overflow-y-auto p-4 space-y-2 hidescrollbar">
                {chatHistory.length === 0 ? (
                   <div className="text-center text-gray-500 mt-8">
                      <p>No chats yet</p>
                   </div>
                ) : (
-                  chatHistory.map(chatItem => (
-                     <div
-                        key={chatItem.id}
-                        onClick={() => handleSelectChat(chatItem.id)}
-                        className={`p-3 rounded-lg cursor-pointer flex justify-between items-center group transition-colors ${
-                           currentChatId === chatItem.id
-                              ? 'bg-gray-700'
-                              : 'bg-gray-800 hover:bg-gray-700'
-                        }`}
-                     >
-                        <span className="truncate text-sm">{chatItem.title}</span>
-                        <button
-                           onClick={(e) => handleDeleteChat(e, chatItem.id)}
-                           className="opacity-0 group-hover:opacity-100 text-gray-400 hover:text-red-400 transition-all"
+                  chatHistory.map((chatItem, idx) => {
+                     console.log(`Chat ${idx}:`, chatItem)
+                     return (
+                        <div
+                           key={chatItem.id || idx}
+                           onClick={() => handleSelectChat(chatItem.id)}
+                           className={`p-3 rounded-lg cursor-pointer flex justify-between items-center group transition-colors ${
+                              currentChatId === chatItem.id
+                                 ? 'bg-gray-700'
+                                 : 'bg-gray-800 hover:bg-gray-700'
+                           }`}
                         >
-                           ✕
-                        </button>
-                     </div>
-                  ))
+                           <span className="truncate text-sm">{chatItem.title || 'Untitled Chat'}</span>
+                           <button
+                              onClick={(e) => handleDeleteChat(e, chatItem.id)}
+                              className="opacity-0 group-hover:opacity-100 text-gray-400 hover:text-red-400 transition-all"
+                           >
+                              ✕
+                           </button>
+                        </div>
+                     )
+                  })
                )}
             </div>
 
             {/* Sidebar Footer */}
             <div className="border-t border-gray-700 p-4 space-y-2">
                <div className="text-xs text-gray-500 px-3 py-2">
-                  Logged in as: <span className="text-gray-300">{user?.name || 'User'}</span>
+                  Logged in as: <span className="text-gray-300">{user?.name || 'guest'}</span>
                </div>
                <button className="w-full px-3 py-2 text-sm text-gray-400 hover:text-gray-200 hover:bg-gray-800 rounded-lg transition-colors text-left">
                   Settings
@@ -136,7 +177,7 @@ const Dashboard = () => {
             </div>
 
             {/* Messages Area */}
-            <div className="flex-1 overflow-y-auto p-6 space-y-4">
+            <div className="flex-1 overflow-y-auto p-6 space-y-4 hidescrollbar">
                {currentMessages.length === 0 ? (
                   <div className="flex items-center justify-center h-full">
                      <div className="text-center">
@@ -157,7 +198,25 @@ const Dashboard = () => {
                                  : 'bg-gray-800 text-gray-100'
                            }`}
                         >
-                           <p className="text-sm">{msg.content}</p>
+                           <div className="text-sm prose prose-invert max-w-none dark">
+                              <ReactMarkdown
+                                 components={{
+                                    p: ({node, ...props}) => <p className="mb-2 last:mb-0" {...props} />,
+                                    ul: ({node, ...props}) => <ul className="list-disc list-inside mb-2" {...props} />,
+                                    ol: ({node, ...props}) => <ol className="list-decimal list-inside mb-2" {...props} />,
+                                    li: ({node, ...props}) => <li className="mb-1" {...props} />,
+                                    code: ({node, ...props}) => <code className="bg-gray-900 px-2 py-1 rounded text-gray-200" {...props} />,
+                                    pre: ({node, ...props}) => <pre className="bg-gray-900 p-3 rounded mb-2 overflow-x-auto" {...props} />,
+                                    h1: ({node, ...props}) => <h1 className="font-bold text-lg mb-2" {...props} />,
+                                    h2: ({node, ...props}) => <h2 className="font-bold text-base mb-2" {...props} />,
+                                    h3: ({node, ...props}) => <h3 className="font-bold text-sm mb-2" {...props} />,
+                                    blockquote: ({node, ...props}) => <blockquote className="border-l-4 border-gray-500 pl-3 italic mb-2" {...props} />,
+                                    a: ({node, ...props}) => <a className="text-blue-400 hover:underline" {...props} />,
+                                 }}
+                              >
+                                 {msg.content}
+                              </ReactMarkdown>
+                           </div>
                         </div>
                      </div>
                   ))

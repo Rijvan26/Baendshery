@@ -6,8 +6,9 @@ import messageModel from "../models/message.model.js"
 import userModel from "../models/user.model.js"
 
 export async function sendMessages (req,res) {
-    const {message, chat:chatId} = req.body
+    const {message, chatId} = req.body
 
+    
     let chat = null, title = null;
     if(!chatId) {
      title = await generateChatTitle(message)
@@ -25,14 +26,21 @@ export async function sendMessages (req,res) {
     })
 
 
-    const messages = await messageModel.find({chat:chatId || chat.id})
-    const result = await genrateResponse(message)
+    const messages = await messageModel.find({chat:chatId || chat.id}).sort({createdAt:1}).limit(15)
+
+    const history = await messages.map(msg => (
+         {
+            role: msg.role === "ai" ? "assistent" : "user",
+            content:msg.content
+        }
+    ))
+    const result = await genrateResponse(message,history)
 
     
     const aiMessage = await messageModel.create({
         chat :chatId ||  chat.id,
         content:result,
-        role:"ai"
+        role:"assistent"
     })
     res.json({
         response:result,

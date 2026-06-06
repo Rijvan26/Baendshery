@@ -1,6 +1,24 @@
 import { Link } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
+
+      const [username, setUsername] = useState("")
+      const [email, setEmail] = useState('')
+      const [password, setPassword] = useState('')
+  
+      const navigate = useNavigate()
+  
+      const {handleRegister} =  useAuth()
+  
+      const submitForm = async (e) => {
+          e.preventDefault()
+          await handleRegister(username,email,password)
+  
+          navigate("/login")
+      }
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-cyan-500 via-blue-600 to-purple-700 p-4">
       <div className="w-full max-w-md backdrop-blur-lg bg-white/10 border border-white/20 rounded-3xl p-8 shadow-2xl">
@@ -12,12 +30,14 @@ const Register = () => {
           Join us and start your journey
         </p>
 
-        <form className="space-y-5">
+        <form onClick={submitForm} className="space-y-5">
           <div>
             <label className="text-white block mb-2">Username</label>
             <input
               type="text"
               placeholder="Enter username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               className="w-full px-4 py-3 rounded-xl bg-white/20 text-white placeholder-gray-300 outline-none border border-white/20 focus:border-cyan-400"
             />
           </div>
@@ -27,6 +47,8 @@ const Register = () => {
             <input
               type="email"
               placeholder="Enter email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="w-full px-4 py-3 rounded-xl bg-white/20 text-white placeholder-gray-300 outline-none border border-white/20 focus:border-cyan-400"
             />
           </div>
@@ -36,6 +58,8 @@ const Register = () => {
             <input
               type="password"
               placeholder="Enter password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               className="w-full px-4 py-3 rounded-xl bg-white/20 text-white placeholder-gray-300 outline-none border border-white/20 focus:border-cyan-400"
             />
           </div>

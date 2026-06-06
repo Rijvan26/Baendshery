@@ -13,7 +13,7 @@ const messageSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ['user', 'ai'],
+      enum: ['user', 'assistent'],
       required: [true, 'Please specify the role (user or ai)'],
     },
   },
