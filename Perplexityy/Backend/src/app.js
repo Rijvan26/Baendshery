@@ -6,7 +6,7 @@ import morgan from 'morgan'
 import cors from "cors"
 const app = express()
 app.use(cors({
-    origin: "bg-gradient-to-br from-cyan-500 via-blue-600 to-purple-700",
+    origin: "https://perplexity-phi-mauve.vercel.app",
     credentials:true,
     methods:["GET","POST","PUT","DELETE"]
 }))
