@@ -15,9 +15,11 @@ const Register = () => {
   
       const submitForm = async (e) => {
           e.preventDefault()
-          await handleRegister(username,email,password)
-  
+         const result =  await handleRegister(username,email,password)
+           if (result) {
           navigate("/login")
+
+           }
       }
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-cyan-500 via-blue-600 to-purple-700 p-4">
@@ -30,7 +32,7 @@ const Register = () => {
           Join us and start your journey
         </p>
 
-        <form onClick={submitForm} className="space-y-5">
+        <form onSubmit={submitForm} className="space-y-5">
           <div>
             <label className="text-white block mb-2">Username</label>
             <input
