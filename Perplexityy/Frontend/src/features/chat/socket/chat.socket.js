@@ -7,7 +7,7 @@ let socket = null;
 export const intialSocketConnection = () => {
     if (socket) return socket;
 
-    socket = io("http://localhost:3000", {
+    socket = io("https://perplexityy.onrender.com", {
         withCredentials: true,
     })
 

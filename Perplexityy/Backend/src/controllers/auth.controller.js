@@ -181,7 +181,12 @@ export async function LoginUser(req,res)  {
     },process.env.JWT_SECRET,{expiresIn:"1d"})
 
 
-    res.cookie("token", token)
+   res.cookie("token", token, {
+  httpOnly: true,
+  secure: true,
+  sameSite: "none"
+})
+
     res.json({
         success:true,
         message:"user logged in successfully",
