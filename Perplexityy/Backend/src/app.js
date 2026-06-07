@@ -6,7 +6,7 @@ import morgan from 'morgan'
 import cors from "cors"
 const app = express()
 app.use(cors({
-    origin:"perplexity-f1eyy00uf-rijvan26s-projects.vercel.app",
+    origin:"https://perplexity-phi-mauve.vercel.app",
     credentials:true,
     methods:["GET","POST","PUT","DELETE"]
 }))
