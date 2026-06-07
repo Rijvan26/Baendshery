@@ -13,7 +13,7 @@ const Dashboard = () => {
    const chatHook = useChat()
    
    const [inputValue, setInputValue] = useState('')
-   const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth >= 768)
+   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
 
    // Get current chat messages from Redux
    const currentMessages = currentChatId && chats[currentChatId]?.messages || []
@@ -101,9 +101,9 @@ const Dashboard = () => {
    }
 
    return (
-      <div className="flex h-screen bg-gradient-to-br from-cyan-500 via-blue-600 to-purple-700 text-gray-100">
+      <div className="flex h-screen bg-gray-900 text-gray-100">
          {/* Left Sidebar */}
-         <div className={`${isSidebarOpen ? 'w-48 sm:w-64' : 'w-0'} bg-gray-950/90 backdrop-blur-md border-r border-gray-700 flex flex-col transition-all duration-300 overflow-hidden fixed md:relative h-full z-40 md:z-auto`}>
+         <div className={`${isSidebarOpen ? 'w-48 sm:w-64' : 'w-0'} bg-gray-950 border-r border-gray-700 flex flex-col transition-all duration-300 overflow-hidden fixed md:relative h-full z-40 md:z-auto`}>
             {/* Sidebar Header */}
             <div className="p-3 sm:p-4 border-b border-gray-700 ">
                <button
@@ -167,7 +167,7 @@ const Dashboard = () => {
          {/* Main Content Area */}
          <div className="flex-1 flex flex-col w-full md:w-auto">
             {/* Top Bar */}
-            <div className="border-b border-gray-700/50 bg-black/40 backdrop-blur-md px-3 sm:px-6 py-3 sm:py-4 flex items-center gap-3 sm:gap-4">
+            <div className="border-b border-gray-700 bg-gray-900 px-3 sm:px-6 py-3 sm:py-4 flex items-center gap-3 sm:gap-4">
                <button
                   onClick={() => setIsSidebarOpen(!isSidebarOpen)}
                   className="md:hidden text-gray-400 hover:text-gray-200 transition-colors text-xl"
@@ -180,12 +180,12 @@ const Dashboard = () => {
             </div>
 
             {/* Messages Area */}
-            <div className="flex-1 overflow-y-auto p-3 sm:p-6 space-y-3 sm:space-y-4 hidescrollbar bg-black/20 backdrop-blur-sm">
+            <div className="flex-1 overflow-y-auto p-3 sm:p-6 space-y-3 sm:space-y-4 hidescrollbar">
                {currentMessages.length === 0 ? (
                   <div className="flex items-center justify-center h-full">
                      <div className="text-center px-4">
                         <h2 className="text-xl sm:text-3xl font-bold mb-2">Start a conversation</h2>
-                        <p className="text-gray-300 text-sm sm:text-base">Type your message below to begin chatting</p>
+                        <p className="text-gray-400 text-sm sm:text-base">Type your message below to begin chatting</p>
                      </div>
                   </div>
                ) : (
@@ -197,8 +197,8 @@ const Dashboard = () => {
                         <div
                            className={`max-w-xs sm:max-w-sm lg:max-w-md px-3 sm:px-4 py-2 sm:py-3 rounded-lg text-sm sm:text-base ${
                               msg.role === 'user'
-                                 ? 'bg-blue-600/90 text-white'
-                                 : 'bg-gray-800/90 text-gray-100'
+                                 ? 'bg-blue-600 text-white'
+                                 : 'bg-gray-800 text-gray-100'
                            }`}
                         >
                            <div className="text-sm prose prose-invert max-w-none dark">
@@ -227,7 +227,7 @@ const Dashboard = () => {
             </div>
 
             {/* Input Area */}
-            <div className="border-t border-gray-700/50 bg-black/40 backdrop-blur-md p-3 sm:p-6">
+            <div className="border-t border-gray-700 bg-gray-900 p-3 sm:p-6">
                <div className="max-w-full">
                   <div className="flex gap-2 sm:gap-3">
                      <input
@@ -237,7 +237,7 @@ const Dashboard = () => {
                         onKeyPress={(e) => e.key === 'Enter' && !isLoading && handleSubmitMessage(e)}
                         placeholder="Type your message..."
                         disabled={isLoading}
-                        className="flex-1 px-3 sm:px-4 py-2 sm:py-3 bg-gray-800/90 border border-gray-700 rounded-lg focus:outline-none focus:border-blue-500 placeholder-gray-500 disabled:opacity-50 text-sm sm:text-base"
+                        className="flex-1 px-3 sm:px-4 py-2 sm:py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:border-blue-500 placeholder-gray-500 disabled:opacity-50 text-sm sm:text-base"
                      />
                      <button
                         onClick={handleSubmitMessage}

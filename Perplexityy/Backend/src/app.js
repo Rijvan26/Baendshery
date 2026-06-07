@@ -6,10 +6,7 @@ import morgan from 'morgan'
 import cors from "cors"
 const app = express()
 app.use(cors({
-    origin:[
-        "bg-gradient-to-br from-cyan-500 via-blue-600 to-purple-700",
-        "http://localhost:5173"
-    ],
+    origin: "bg-gradient-to-br from-cyan-500 via-blue-600 to-purple-700",
     credentials:true,
     methods:["GET","POST","PUT","DELETE"]
 }))
