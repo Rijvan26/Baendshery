@@ -2,6 +2,13 @@ import dotenv from "dotenv"
 dotenv.config()
 import nodemailer from "nodemailer";
 
+
+console.log("GOOGLE_USER:", process.env.GOOGLE_USER);
+console.log("CLIENT_ID exists:", !!process.env.GOOGLE_CLIENT_ID);
+console.log("CLIENT_SECRET exists:", !!process.env.GOOGLE_CLIENT_SECRET);
+console.log("REFRESH_TOKEN exists:", !!process.env.GOOGLE_REFRESH_TOKEN);
+
+
 const transporter = nodemailer.createTransport({
     service:"gmail",
     auth:{ 

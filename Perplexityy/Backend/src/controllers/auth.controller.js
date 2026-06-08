@@ -34,7 +34,7 @@ export const registerUser = async (req, res) => {
         subject:"Welcome to Perplexity",
         html:`<h1>Welcome to Perplexity!</h1>\n<p>Hi ${username},</p>\n<p>We're excited to have you on board.
         <p>please verify your email blow link</p>
-        <a href="http://localhost:3000/api/auth/verify-email?token=${emailverificationToken}">Verify Email</a>
+        <a href="https://perplexityy.onrender.com/api/auth/verify-email?token=${emailverificationToken}">Verify Email</a>
         If you have any questions or need assistance, feel free to reach out.</p>\n<p>Best regards,<br>The Perplexity Team</p>`
     })
 
