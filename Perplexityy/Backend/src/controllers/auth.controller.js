@@ -117,11 +117,21 @@ export async function resendVerificationEmail(req,res) {
         email:user.email,
     },process.env.JWT_SECRET,{expiresIn:"15m"})
 
-    await sendEmail({
+   try {
+     await sendEmail({
         to:email,
         subject:"Verify your email",
         html:`<h1>Verify your email</h1>\n<p>Hi ${user.username},</p>\n<p>Please verify your email by clicking the link below:</p>\n<a href="http://localhost:3000/api/auth/verify-email?token=${emailverificationToken}">Verify Email</a>`
     })
+   } catch (err) {
+      console.log(err)
+
+      return res.status(500).json({
+        success:false,
+        message:"failed to send email"
+
+      })
+   }
 
     res.status(200).json({
         message:"verification email sent successfully",

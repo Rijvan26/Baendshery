@@ -1,41 +1,19 @@
-import dotenv from "dotenv"
-dotenv.config()
-import nodemailer from "nodemailer";
-import dns from "dns";
+import { Resend } from "resend";
 
-dns.setDefaultResultOrder("ipv4first");
+const resend = new Resend(process.env.RESEND_API_KEY);
 
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    type: "oauth2",
-    user: process.env.GOOGLE_USER,
-    clientId: process.env.GOOGLE_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    refreshToken: process.env.GOOGLE_REFRESH_TOKEN,
-  },
-  logger: true,
-  debug: true,
-});
+export async function sendEmail({ to, subject, html }) {
+  const { data, error } = await resend.emails.send({
+    from: "onboarding@resend.dev",
+    to,
+    subject,
+    html,
+  });
 
-
-
-transporter.verify((error, success) => {
   if (error) {
-    console.error('Error connecting to email server:', error);
-  } else {
-    console.log('Email server is ready to send messages');
+    console.error(error);
+    throw error;
   }
-});
 
-export async function sendEmail({to, subject, html}) {
-    const mailOptions = {
-        from: process.env.GOOGLE_USER,
-        to,
-        subject,
-        html
-    }; 
-
-    const details = await transporter.sendMail(mailOptions);
-    console.log("Email sent:", details);
+  console.log("Email sent:", data);
 }
