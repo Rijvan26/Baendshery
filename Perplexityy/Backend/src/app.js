@@ -8,7 +8,6 @@ const app = express()
 app.use(cors({
     origin: "https://perplexity-phi-mauve.vercel.app",
     credentials:true,
-    methods:["GET","POST","PUT","DELETE"]
 }))
 app.use(express.json())
 app.use(cookieParser())
