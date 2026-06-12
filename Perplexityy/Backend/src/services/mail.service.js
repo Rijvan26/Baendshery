@@ -21,6 +21,8 @@ transporter.verify((error, success) => {
 });
 
 export async function sendEmail({ to, subject, html }) {
+  console.log("Attempting to send email");
+
   const info = await transporter.sendMail({
     from: process.env.GOOGLE_USER,
     to,
