@@ -1,5 +1,9 @@
 import nodemailer from "nodemailer";
 
+console.log("MAIL SERVICE LOADED");
+console.log("GOOGLE_USER:", process.env.GOOGLE_USER);
+console.log("APP_PASSWORD EXISTS:", !!process.env.GOOGLE_APP_PASSWORD);
+
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
