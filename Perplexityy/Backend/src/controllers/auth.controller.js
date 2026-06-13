@@ -24,8 +24,10 @@ export async function registerUser(req, res) {
     const emailVerificationToken = jwt.sign({
         email: user.email,
     }, process.env.JWT_SECRET)
-
+       
+    console.log("user created")
     try {
+        console.log("before email sent")
         await sendEmail({
         to: email,
         subject: "Welcome to Perplexity!",
@@ -33,7 +35,7 @@ export async function registerUser(req, res) {
                 <p>Hi ${username},</p>
                 <p>Thank you for registering at <strong>Perplexity</strong>. We're excited to have you on board!</p>
                 <p>Please verify your email address by clicking the link below:</p>
-                <a href="http://localhost:3000/api/auth/verify-email?token=${emailVerificationToken}">Verify Email</a>
+                <a href="https://perplexityy.onrender.com/api/auth/verify-email?token=${emailVerificationToken}">Verify Email</a>
                 <p>If you did not create an account, please ignore this email.</p>
                 <p>Best regards,<br>The Perplexity Team</p>
         `
@@ -41,7 +43,7 @@ export async function registerUser(req, res) {
     } catch(err) {
         return res.status(400).json({
             message:"email not sent",
-            
+
         })
     }
 

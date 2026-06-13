@@ -1,15 +1,20 @@
 import nodemailer from "nodemailer";
 
+
+console.log("GOOGLE_USER:", process.env.GOOGLE_USER);
+console.log("CLIENT_ID:", !!process.env.GOOGLE_CLIENT_ID);
+console.log("CLIENT_SECRET:", !!process.env.GOOGLE_CLIENT_SECRET);
+console.log("REFRESH_TOKEN:", !!process.env.GOOGLE_REFRESH_TOKEN);
+
 const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-        type: 'OAuth2',
-        user: process.env.GOOGLE_USER,
-        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        refreshToken: process.env.GOOGLE_REFRESH_TOKEN,
-        clientId: process.env.GOOGLE_CLIENT_ID
-    }
-})
+  host: "smtp.gmail.com",
+  port: 587,
+  secure: false,
+  auth: {
+    user: process.env.GOOGLE_USER,
+    pass: process.env.APP_PASSWORD,
+  },
+});
 
 transporter.verify()
     .then(() => { console.log("Email transporter is ready to send emails"); })
