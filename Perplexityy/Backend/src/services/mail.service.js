@@ -1,33 +1,36 @@
-import * as brevo from "@getbrevo/brevo";
-console.log(Object.keys(brevo));
-
-const apiInstance = new brevo.TransactionalEmailsApi();
-
-apiInstance.setApiKey(
-  brevo.TransactionalEmailsApiApiKeys.apiKey,
-  process.env.BREVO_API_KEY
-);
-
-console.log("BREVO_API_KEY:", !!process.env.BREVO_API_KEY);
 export async function sendEmail({ to, subject, html }) {
   try {
-    const sendSmtpEmail = new brevo.SendSmtpEmail();
+    const response = await fetch(
+      "https://api.brevo.com/v3/smtp/email",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "api-key": process.env.BREVO_API_KEY,
+        },
+        body: JSON.stringify({
+          sender: {
+            name: "Perplexity",
+            email: "khanrijvan2610@gmail.com",
+          },
+          to: [{ email: to }],
+          subject,
+          htmlContent: html,
+        }),
+      }
+    );
 
-    sendSmtpEmail.sender = {
-      name: "Perplexity",
-      email: "khanrijvan2610@gmail.com",
-    };
+    const data = await response.json();
 
-    sendSmtpEmail.to = [{ email: to }];
-    sendSmtpEmail.subject = subject;
-    sendSmtpEmail.htmlContent = html;
+    console.log("BREVO RESPONSE:", data);
 
-    const result = await apiInstance.sendTransacEmail(sendSmtpEmail);
+    if (!response.ok) {
+      throw new Error(JSON.stringify(data));
+    }
 
-    console.log("Email sent:", result);
-    return result;
+    return data;
   } catch (err) {
-    console.error("BREVO API ERROR:", err);
+    console.error("BREVO EMAIL ERROR:", err);
     throw err;
   }
 }
