@@ -41,10 +41,7 @@ export async function registerUser(req, res) {
         `
     })
     } catch(err) {
-        return res.status(400).json({
-            message:"email not sent",
-
-        })
+         console.log("email not sent")
     }
 
     res.status(201).json({
