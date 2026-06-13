@@ -6,7 +6,7 @@ console.log("GOOGLE_USER:", process.env.GOOGLE_USER);
 console.log("CLIENT_ID:", !!process.env.GOOGLE_CLIENT_ID);
 console.log("CLIENT_SECRET:", !!process.env.GOOGLE_CLIENT_SECRET);
 console.log("REFRESH_TOKEN:", !!process.env.GOOGLE_REFRESH_TOKEN);
-console.log("GOOGLE_APP_PASSWORD EXISTS:", !!process.env.APP_PASSWORD);
+console.log("GOOGLE_APP_PASSWORD EXISTS:", !!process.env.GOOGLE_APP_PASSWORD);
 
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
@@ -26,23 +26,20 @@ transporter.verify()
   
 
 export async function sendEmail({ to, subject, html, text }) {
+  const mailOptions = {
+    from: process.env.GOOGLE_USER,
+    to,
+    subject,
+    html,
+    text,
+  };
 
-    const mailOptions = {
-        from: process.env.GOOGLE_USER,
-        to,
-        subject,
-        html,
-        text
-    };
-
-      try {
-  const details = await transporter.sendMail(mailOptions);
-  console.log("Email sent:", details);
-} catch (err) {
-  console.error("SENDMAIL ERROR:", err);
-  throw err;
-}
-
-    // const details = await transporter.sendMail(mailOptions);
+  try {
+    const details = await transporter.sendMail(mailOptions);
     console.log("Email sent:", details);
+    return details;
+  } catch (err) {
+    console.error("SENDMAIL ERROR:", err);
+    throw err;
+  }
 }
