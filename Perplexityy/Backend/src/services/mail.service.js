@@ -1,31 +1,30 @@
-import nodemailer from "nodemailer";
+import Brevo from "@getbrevo/brevo";
 
-const transporter = nodemailer.createTransport({
-  host: "smtp-relay.brevo.com",
-  port: 587,
-  secure: false,
-  connectionTimeout: 10000,
-  greetingTimeout: 10000,
-  socketTimeout: 10000,
-  auth: {
-    user: process.env.BREVO_SMTP_USER,
-    pass: process.env.BREVO_SMTP_PASS,
-  },
-});
+const apiInstance = new Brevo.TransactionalEmailsApi();
 
-console.log("BREVO USER:", process.env.BREVO_SMTP_USER);
-console.log("BREVO PASS:", !!process.env.BREVO_SMTP_PASS);
+apiInstance.setApiKey(
+  Brevo.TransactionalEmailsApiApiKeys.apiKey,
+  process.env.BREVO_API_KEY
+);
 
-transporter.verify()
-  .then(() => console.log("Brevo SMTP connected"))
-  .catch((err) => console.error("Brevo SMTP error:", err));
+export async function sendEmail({ to, subject, html }) {
+  try {
+    const sendSmtpEmail = {
+      sender: {
+        name: "Perplexity",
+        email: "khanrijvan2610@gmail.com",
+      },
+      to: [{ email: to }],
+      subject,
+      htmlContent: html,
+    };
 
-export async function sendEmail({ to, subject, html, text }) {
-  return transporter.sendMail({
-    from: process.env.GOOGLE_USER,
-    to,
-    subject,
-    html,
-    text,
-  });
+    const result = await apiInstance.sendTransacEmail(sendSmtpEmail);
+
+    console.log("Email sent:", result);
+    return result;
+  } catch (err) {
+    console.error("BREVO API ERROR:", err);
+    throw err;
+  }
 }
