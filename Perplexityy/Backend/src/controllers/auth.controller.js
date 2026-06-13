@@ -25,7 +25,8 @@ export async function registerUser(req, res) {
         email: user.email,
     }, process.env.JWT_SECRET)
 
-    await sendEmail({
+    try {
+        await sendEmail({
         to: email,
         subject: "Welcome to Perplexity!",
         html: `
@@ -37,6 +38,12 @@ export async function registerUser(req, res) {
                 <p>Best regards,<br>The Perplexity Team</p>
         `
     })
+    } catch(err) {
+        return res.status(400).json({
+            message:"email not sent",
+            
+        })
+    }
 
     res.status(201).json({
         message: "User registered successfully",
