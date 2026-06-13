@@ -3,46 +3,53 @@ import { sendEmail } from "../services/mail.service.js"
 
 import jwt from "jsonwebtoken"
 
-export const registerUser = async (req, res) => {
-  console.log("Register started");
+export async function registerUser(req, res) {
 
-  const { username, email, password } = req.body;
+    const { username, email, password } = req.body;
 
-  console.log("Received data");
+    const isUserAlreadyExists = await userModel.findOne({
+        $or: [ { email }, { username } ]
+    })
 
-  const isUserExist = await userModel.findOne({
-    $or: [{ username }, { email }]
-  });
+    if (isUserAlreadyExists) {
+        return res.status(400).json({
+            message: "User with this email or username already exists",
+            success: false,
+            err: "User already exists"
+        })
+    }
 
-  console.log("User existence checked");
+    const user = await userModel.create({ username, email, password })
 
-  if (isUserExist) {
-    console.log("User already exists");
+    const emailVerificationToken = jwt.sign({
+        email: user.email,
+    }, process.env.JWT_SECRET)
 
-    return res.status(400).json({
-      success: false,
-      message: "User already exists"
+    await sendEmail({
+        to: email,
+        subject: "Welcome to Perplexity!",
+        html: `
+                <p>Hi ${username},</p>
+                <p>Thank you for registering at <strong>Perplexity</strong>. We're excited to have you on board!</p>
+                <p>Please verify your email address by clicking the link below:</p>
+                <a href="http://localhost:3000/api/auth/verify-email?token=${emailVerificationToken}">Verify Email</a>
+                <p>If you did not create an account, please ignore this email.</p>
+                <p>Best regards,<br>The Perplexity Team</p>
+        `
+    })
+
+    res.status(201).json({
+        message: "User registered successfully",
+        success: true,
+        user: {
+            id: user._id,
+            username: user.username,
+            email: user.email
+        }
     });
-  }
 
-  console.log("Creating user");
+}
 
-  const user = await userModel.create({
-    username,
-    email,
-    password
-  });
-
-  console.log("User created");
-
-  console.log("About to send email");
-
-  await sendEmail({...})
-
-  console.log("Email sent");
-
-  return res.status(201).json({....})
-};
 
 export async function verifyEmail(req,res) {
     const {token} = req.query
