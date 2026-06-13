@@ -4,11 +4,17 @@ const transporter = nodemailer.createTransport({
   host: "smtp-relay.brevo.com",
   port: 587,
   secure: false,
+  connectionTimeout: 10000,
+  greetingTimeout: 10000,
+  socketTimeout: 10000,
   auth: {
     user: process.env.BREVO_SMTP_USER,
     pass: process.env.BREVO_SMTP_PASS,
   },
 });
+
+console.log("BREVO USER:", process.env.BREVO_SMTP_USER);
+console.log("BREVO PASS:", !!process.env.BREVO_SMTP_PASS);
 
 transporter.verify()
   .then(() => console.log("Brevo SMTP connected"))
