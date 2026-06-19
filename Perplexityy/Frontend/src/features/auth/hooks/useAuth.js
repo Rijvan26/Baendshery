@@ -1,14 +1,21 @@
 import { useDispatch } from "react-redux"
 import {registerUser,loginUser, getMe} from "../services/auth.service"
 import { setUser,setLoading,setError } from "../auth.slice"
+import { toast } from "sonner"
 const useAuth = () => {
    const dispatch = useDispatch()
     async function handleRegister(username, email , password) {
         try {
           dispatch(setLoading(true))
           const data = await registerUser(username,email,password)
-        } catch {
+          toast.success("Register successfully")
+          return data
+
+        } catch(err) {
             dispatch(setError("Failed to register"))
+            toast.error("Failed to register")
+            return null
+
         } finally {
             dispatch(setLoading(false))
         }
@@ -19,9 +26,17 @@ const useAuth = () => {
           dispatch(setLoading(true))
           const data = await loginUser(email,password)
           dispatch(setUser(data.user))
-        } catch {
-            dispatch(setError(err?.response?.data?.message || "Failed to login"))
-        } finally {
+          toast.success("Login successfully")
+          return data
+        } catch (err) {
+    const message =
+      err?.response?.data?.message || "Failed to fetch user data";
+
+    dispatch(setError(message));
+    toast.error(message);
+
+    return null;
+}finally {
             dispatch(setLoading(false))
         }
     }
@@ -31,9 +46,15 @@ const useAuth = () => {
            dispatch(setLoading(true))
            const data = await getMe()
            dispatch(setUser(data.user))
-         } catch {
-                dispatch(setError(err?.response?.data?.message || "Failed to fetch user data"))
-         } finally {
+          return data
+            
+         } catch (err) {
+    if (err?.response?.status !== 400) {
+        toast.error("Failed to fetch user data");
+    }
+
+    return null;
+} finally {
                 dispatch(setLoading(false))
          }
 

@@ -5,10 +5,14 @@ import * as z from 'zod'
 import { searchInternet } from "./internet.service.js";
 import { describe } from "zod/v4/core";
 
-const geminiModel = new ChatGoogleGenerativeAI({
-  model: "gemini-2.5-flash",
-  apiKey: process.env.GEMINI_API_KEY,
-});
+import dotenv from "dotenv";
+dotenv.config();
+
+console.log("MISTRAL:", process.env.MISTRAL_API_KEY);
+// const geminiModel = new ChatGoogleGenerativeAI({
+//   model: "gemini-2.5-flash",
+//   apiKey: process.env.GEMINI_API_KEY,
+// });
 
 const mistralModel = new ChatMistralAI({
   model: "mistral-small-latest",

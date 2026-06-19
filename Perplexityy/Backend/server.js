@@ -1,10 +1,12 @@
-import dotenv from "dotenv"
+import dotenv from "dotenv";
+dotenv.config();
+
+console.log("MISTRAL:", process.env.MISTRAL_API_KEY);
 import app from "./src/app.js"
 import http from "http"
 import {initSocketServer} from "./src/socket/server.socket.js"
 import dns from "node:dns"
 import connectToDb from "./src/config/database.js"
-    dotenv.config()
 dns.setServers(['1.1.1.1', '8.8.8.8'])
 
 const httpServer = http.createServer(app)
