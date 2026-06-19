@@ -8,8 +8,8 @@ app.use(express.json())
 app.use(cookieParser())
 app.use(cors({
     credentials:true,
-    origin:"https://localhost:5173"
-    // origin:"https://rizzzgram.onrender.com"
+    // origin:"https://localhost:5173"
+    origin:"https://rizzzgram.onrender.com"
 }))
 
 // require routes
