@@ -30,9 +30,9 @@ const MobileSidebar = ({
             <div className="p-6 border-b border-[#424845]">
                <div className="flex items-center gap-3 mb-8">
                   <div className="w-10 h-10 rounded-lg bg-[#baf600] flex items-center justify-center">
-                     <span className="font-bold text-black text-lg">P</span>
+                     <span className="font-bold text-black text-lg">XI</span>
                   </div>
-                  <h1 className="text-2xl font-bold text-white">Perplexity</h1>
+                  <h1 className="text-2xl font-bold text-white">Intellexx</h1>
                </div>
                <Button 
                   onClick={() => {
