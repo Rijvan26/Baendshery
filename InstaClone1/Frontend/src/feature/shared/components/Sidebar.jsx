@@ -38,7 +38,7 @@ const Sidebar = ({ user }) => {
           <i className="ri-home-5-line"></i>
         </Link>
 
-        <Link to="/create" className={location.pathname === "/create" ? "active" : ""}>
+        <Link to="/create-post" className={location.pathname === "/create" ? "active" : ""}>
           <i className="ri-add-box-line"></i>
         </Link>
         <Link to={'/message'}>

@@ -7,6 +7,7 @@ import { CreatePost } from './feature/post/pages/CreatePost'
 import MainLayout from './layout/MainLayout'
 import Profile from './feature/auth/page/Profile'
 import Protected from './feature/auth/components/Protected'
+import MessagePage from './feature/shared/components/Message'
 
 
  function AppRoutes() {
@@ -22,7 +23,7 @@ import Protected from './feature/auth/components/Protected'
             <Route path='/create-post' element={<CreatePost/>} />
             <Route path="get-me" element={<Profile />} />
             <Route path='/login' element={<LoginFrom/>} />
-
+            <Route path='/message' element={<MessagePage/>} />
 
         
             </Route>

@@ -5,8 +5,8 @@ const authRouter = express.Router()
 const identifyUser = require("../middleware/auth.middleware")
 const multer = require("multer")
 const upload = multer({storage: multer.memoryStorage() })
-
-authRouter.post("/register",upload.single("profilePic"), authController.registerController)
+const {registerValidation} = require("../validation/auth.validation")
+authRouter.post("/register",upload.single("profilePic"), registerValidation, authController.registerController)
 
 authRouter.post("/login", authController.loginController)
 
