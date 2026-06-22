@@ -26,7 +26,7 @@ export async function sendMessages (req,res) {
     })
 
 
-    const messages = await messageModel.find({chat:chatId || chat.id}).sort({createdAt:1}).limit(15)
+    const messages = await messageModel.find({chat:chatId || chat.id}).sort({createdAt:-1}).limit(15)
 
     const history = await messages.map(msg => (
          {
