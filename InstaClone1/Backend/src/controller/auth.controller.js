@@ -58,6 +58,7 @@ async function registerController (req,res)  {
     res.status(201).json({
         message: "user register successfully",
         user:{
+            _id: user._id,
             email:user.email,
             username:user.username,
             bio: user.bio,
@@ -117,6 +118,7 @@ async function loginController (req,res)  {
     res.status(200).json({
         message:"user logged in successfully",
         user:{
+            _id: user._id,
             username:user.username,
             email: user.email,
             bio: user.bio,
@@ -135,10 +137,10 @@ async function getMeController (req,res) {
             message:"user not found"
         })
      }
-     console.log(user)
 
       res.status(200).json({
         user:{
+            _id: user._id,
             username:user.username,
             email:user.email,
             bio:user.bio,

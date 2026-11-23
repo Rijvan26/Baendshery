@@ -12,6 +12,9 @@ const Navbar = () => {
         <div className="navlinks">
            
 
+          <Link to="/message" className='button' style={{ color: "#fff", fontSize: "1.3rem", display: "flex", alignItems: "center" }} title="Messages">
+            <i className="ri-messenger-line"></i>
+          </Link>
           <button onClick={() => {navigate("/create-post")}}
         className='button primarybtn'>Post✨</button>
         {user ? (

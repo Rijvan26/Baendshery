@@ -1,20 +1,19 @@
-import React ,{useEffect} from 'react'
-import { RouterProvider } from 'react-router'
+import React from 'react'
 import AppRoutes from './AppRoutes'
 import "./feature/shared/style.scss"
-import {AuthProvider} from './feature/auth/auth.context.jsx'
+import { AuthProvider } from './feature/auth/auth.context.jsx'
 import { PostContextProvider } from './feature/post/post.context.jsx'
-import Navbar from './feature/shared/components/Navbar.jsx'
-import {useAuth} from "../src/feature/auth/hooks/userAuth.js"
+import { SocketProvider } from './context/SocketContext.jsx'
+
 const App = () => {
-
-
   return (
-     <AuthProvider>
-       <PostContextProvider> 
-        <AppRoutes />
-    </PostContextProvider> 
-     </AuthProvider> 
+    <AuthProvider>
+      <SocketProvider>
+        <PostContextProvider>
+          <AppRoutes />
+        </PostContextProvider>
+      </SocketProvider>
+    </AuthProvider>
   )
 }
 

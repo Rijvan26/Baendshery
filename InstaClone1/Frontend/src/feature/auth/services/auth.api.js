@@ -1,72 +1,73 @@
 import axios from 'axios'
 
 const api = axios.create({
-    baseURL:"https://baendshery-3.onrender.com/api/auth",
-    withCredentials:true
+    baseURL: "http://localhost:3000/api/auth",
+    // "https://baendshery-3.onrender.com/api/auth",
+    withCredentials: true
 })
-export async function register (username, email,password,bio,profilePic) {
-      
+export async function register(username, email, password, bio, profilePic) {
+
     const formData = new FormData()
     formData.append("username", username)
     formData.append("email", email)
     formData.append("password", password)
     formData.append("bio", bio)
-    if(profilePic) {
+    if (profilePic) {
         formData.append("profilePic", profilePic)
     }
-    try{
+    try {
         const response = await api.post("/register", formData, {
             headers: {
                 "Content-Type": "multipart/form-data"
             }
         })
-    return response.data
+        return response.data
 
-    } catch(err) {
+    } catch (err) {
         throw err
     }
-       
+
 
 
 }
 
 
-export async function login (username,password) {
+export async function login(username, password) {
 
-    try{
+    try {
         const response = await api.post("/login", {
             username,
             password
         },
-    )
+        )
 
-    return response.data
+        return response.data
 
-    } catch(err) {
+    } catch (err) {
         throw err
     }
 
 }
 
-export async function getMe () {
-    try{
+export async function getMe() {
+    try {
         const response = await api.get("/get-me")
         return response.data
-    }catch(err){
+    } catch (err) {
         throw err
     }
 }
 
-export async function logout () {
-    try{
+export async function logout() {
+    try {
         const response = await api.post("/logout")
         return response.data
-    }catch(err){
+    } catch (err) {
         throw err
-    } 
+    }
 }
 
-export async function suggestion () {
+export async function suggestion() {
     try {
         const response = await api.get("/suggestion")
         return response.data
